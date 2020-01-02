@@ -10,8 +10,10 @@ import com.mongodb.client.model.geojson.Position;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.json.bind.JsonbBuilder;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,10 +53,10 @@ public class ParkDAO {
         JsonbBuilder.create().fromJson(json, ArrayList.class)
                 .stream()
                 .forEach(h -> {
-                    HashMap<String, Double> geoHash = (HashMap<String, Double>)((HashMap<String, Object>)h).get("geo");
+                    HashMap<String, BigDecimal> geoHash = (HashMap<String, BigDecimal>)((HashMap<String, Object>)h).get("geo");
                     Park p = new Park(
                             (String)((HashMap<String, Object>)h).get("description"),
-                            new LocationPoint(geoHash.get("lat"), geoHash.get("lon"))
+                            new LocationPoint(geoHash.get("lat").doubleValue(), geoHash.get("lon").doubleValue())
                     );
 
                     importedParken.add(parkConverter.parkToDoc(p));

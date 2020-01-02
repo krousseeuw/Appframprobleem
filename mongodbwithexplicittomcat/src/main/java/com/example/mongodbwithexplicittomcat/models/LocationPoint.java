@@ -10,7 +10,7 @@ public class LocationPoint {
 
     }
 
-    public LocationPoint(double latitude, double longitude){
+    public LocationPoint(Double latitude, Double longitude){
         coordinates.add(latitude);
         coordinates.add(longitude);
     }

@@ -11,14 +11,15 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 
 @RestController
-@Validated
 @RequestMapping("/parken")
+@Validated
 public class ParkenController {
+
     @Autowired
     private ParkDAO parkDataService;
 
-    @GetMapping({"", "/"})
-    private ArrayList<Park> findAllParks(@RequestParam String name){
+    @GetMapping("")
+    private ArrayList<Park> findAllParks(@RequestParam(required = false) String name){
         if (name == null){
             return parkDataService.findAll();
         } else {
@@ -26,8 +27,8 @@ public class ParkenController {
         }
     }
 
-    @PostMapping({"", "/"})
-    private ArrayList<Park> ClosestParks(@Valid @RequestParam Geo geo){
+    @PostMapping("")
+    private ArrayList<Park> ClosestParks(@Valid @RequestParam(required = false) Geo geo){
         return parkDataService.findNearBy(geo);
     }
 }
